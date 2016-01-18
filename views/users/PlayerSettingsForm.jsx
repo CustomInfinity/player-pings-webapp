@@ -1,6 +1,6 @@
-UserSettingsForm = React.createClass({
+PlayerSettingsForm = React.createClass({
     propTypes: {
-        user: React.PropTypes.shape({
+        player: React.PropTypes.shape({
             _id: React.PropTypes.string.isRequired,
             followedGameIds: React.PropTypes.arrayOf(
                 React.PropTypes.string.isRequired
@@ -13,7 +13,7 @@ UserSettingsForm = React.createClass({
         onAddGame: React.PropTypes.func.isRequired,
         onRemoveGame: React.PropTypes.func.isRequired,
         onChangeName: React.PropTypes.func.isRequired,
-        onDeleteUser: React.PropTypes.func.isRequired,
+        onDeletePlayer: React.PropTypes.func.isRequired,
     },
 
     changeName(e) {
@@ -28,16 +28,16 @@ UserSettingsForm = React.createClass({
         }
     },
 
-    confirmDeleteUser() {
-        if (confirm("Are you sure you want to delete this user?")) {
-            this.props.onDeleteUser();
+    confirmDeletePlayer() {
+        if (confirm("Are you sure you want to delete this player?")) {
+            this.props.onDeletePlayer();
         }
     },
 
     renderFollowingGameToggles() {
         return this.props.allGames.map((game) => {
             const followed =
-                this.props.user.followedGameIds.indexOf(game.id) >= 0;
+                this.props.player.followedGameIds.indexOf(game.id) >= 0;
             return <li key={game.id}>
                 <label>
                     <input
@@ -60,14 +60,14 @@ UserSettingsForm = React.createClass({
                     Name:
                     <input
                         type="text"
-                        value={this.props.user.name}
+                        value={this.props.player.name}
                         onChange={this.changeName}
                     />
                 </label>
             </div>
             <ul>{this.renderFollowingGameToggles()}</ul>
-            <button onClick={this.confirmDeleteUser}>
-                Delete user
+            <button onClick={this.confirmDeletePlayer}>
+                Delete player
             </button>
         </div>;
     },

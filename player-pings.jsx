@@ -3,17 +3,17 @@ function renderPage(content) {
 }
 
 
-FlowRouter.route('/users', {
-    name: "users",
+FlowRouter.route('/players', {
+    name: "players",
     action() {
-        renderPage(<UsersListController />);
+        renderPage(<PlayersListController />);
     },
 });
 
 
-FlowRouter.route('/users/:id', {
-    name: "user",
+FlowRouter.route('/players/:id', {
+    name: "player",
     action(params) {
-        renderPage(<UserSettingsFormController userId={params.id} />);
+        renderPage(<PlayerSettingsFormController playerId={params.id} />);
     },
 });

@@ -1,7 +1,7 @@
 Layout = React.createClass({
     propTypes: {
         content: React.PropTypes.node.isRequired,
-        usersListPath: React.PropTypes.string.isRequired,
+        playersListPath: React.PropTypes.string.isRequired,
     },
 
     render() {
@@ -9,7 +9,7 @@ Layout = React.createClass({
             <header className="layout-header">
                 <h1>Player Pings</h1>
                 <nav>
-                    <a href={this.props.usersListPath}>All Users</a>
+                    <a href={this.props.playersListPath}>All Players</a>
                 </nav>
             </header>
             {this.props.content}
