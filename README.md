@@ -1,7 +1,7 @@
 # player-pings-webapp
 Oh, cool! It's an app where friends can specify what games they're interested in, and invite friends to play with them!
 
-It probably doesn't quite do all of yet.
+It probably doesn't quite do all of that yet.
 
 
 ## Getting started
