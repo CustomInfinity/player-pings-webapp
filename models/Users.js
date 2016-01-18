@@ -8,9 +8,13 @@ const UsersCollection = new Mongo.Collection("users");
  * upsert to create the document if it didn't already exist.
  */
 Users = {
-    get(discordUsername) {
+    getAll() {
+        return UsersCollection.find().fetch();
+    },
+
+    get(userId) {
         // Fetch the user document, or an empty object if no document exists.
-        const user = UsersCollection.findOne(discordUsername) || {};
+        const user = UsersCollection.findOne(userId) || { _id: userId };
 
         // If any fields are not yet set, use their default values.
         user.followedGameIds = user.followedGameIds || [];
@@ -18,17 +22,25 @@ Users = {
         return user;
     },
 
-    addGame(discordUsername, id) {
-        UsersCollection.update(discordUsername, {
-            $addToSet: { followedGameIds: id },
-        }, {
-            upsert: true,
+    setName(userId, newName) {
+        UsersCollection.update(userId, {
+            $set: { name: newName },
+        }, { upsert: true });
+    },
+
+    addGame(userId, gameId) {
+        UsersCollection.update(userId, {
+            $addToSet: { followedGameIds: gameId },
+        }, { upsert: true });
+    },
+
+    removeGame(userId, gameId) {
+        UsersCollection.update(userId, {
+            $pullAll: { followedGameIds: [gameId] },
         });
     },
 
-    removeGame(discordUsername, id) {
-        UsersCollection.update(discordUsername, {
-            $pullAll: { followedGameIds: [id] },
-        });
+    delete(userId) {
+        UsersCollection.remove(userId);
     },
 };

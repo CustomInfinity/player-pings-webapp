@@ -1,18 +1,19 @@
+function renderPage(content) {
+    ReactLayout.render(LayoutController, { content });
+}
+
+
 FlowRouter.route('/users', {
     name: "users",
     action() {
-        ReactLayout.render(Layout, { content: <UsersController /> });
+        renderPage(<UsersListController />);
     },
 });
 
 
-FlowRouter.route('/users/:discordUsername', {
+FlowRouter.route('/users/:id', {
     name: "user",
     action(params) {
-        ReactLayout.render(Layout, {
-            content: <UsersController
-                discordUsername={params.discordUsername}
-            />,
-        });
+        renderPage(<UserSettingsFormController userId={params.id} />);
     },
 });

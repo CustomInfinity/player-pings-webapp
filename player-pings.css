@@ -1,0 +1,4 @@
+.layout-header > h1, .layout-header nav {
+    display: inline-block;
+    margin-right: 1em;
+}
