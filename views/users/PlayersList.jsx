@@ -12,10 +12,28 @@ PlayersList = React.createClass({
     },
 
     updateNewPlayerId() {
-        // If the player ctrl-clicks "Add player" in order to get a bunch of new
-        // player forms, they should actually get _different_ new player forms.
-        // So, when the link is clicked, update the new player ID.
+        // If the player ctrl-clicks "Add player" in order to get a bunch of
+        // new player forms, they should actually get _different_ new player
+        // forms. So, when the link is clicked, update the new player ID.
         this.setState({ newPlayerId: uuid.v4() });
+    },
+
+    sortPlayers() {
+        const players = this.props.players.slice(0);  // shallow copy
+
+        // Sort according to alphabetical order in the user's locale.
+        // Treat a, á, and A as the same character.
+        const collator = new Intl.Collator(undefined, { sensitivity: "base" });
+        players.sort((a, b) => {
+            return collator.compare(this.renderPlayerName(a),
+                                    this.renderPlayerName(b))
+        });
+
+        return players;
+    },
+
+    renderPlayerName(player) {
+        return player.name || player._id;
     },
 
     renderPlayerLink(player) {
@@ -29,7 +47,7 @@ PlayersList = React.createClass({
     render() {
         return <div>
             <ul>
-                {this.props.players.map(this.renderPlayerLink)}
+                {this.sortPlayers().map(this.renderPlayerLink)}
                 <li>
                     <a
                         href={this.props.getPlayerPath(this.state.newPlayerId)}
