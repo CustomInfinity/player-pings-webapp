@@ -6,23 +6,24 @@ PlayerSettingsFormController = React.createClass({
     mixins: [ReactMeteorData],
 
     getMeteorData() {
+        Meteor.subscribe("player", this.props.playerId);
         return { player: Players.get(this.props.playerId) };
     },
 
-    addGame(id) {
-        Players.addGame(this.props.playerId, id);
-    },
-
-    removeGame(id) {
-        Players.removeGame(this.props.playerId, id);
-    },
-
     changeName(newName) {
-        Players.setName(this.props.playerId, newName);
+        Meteor.call("setPlayerName", this.props.playerId, newName);
+    },
+
+    followGame(id) {
+        Meteor.call("followGame", this.props.playerId, id);
+    },
+
+    unfollowGame(id) {
+        Meteor.call("unfollowGame", this.props.playerId, id);
     },
 
     deletePlayer() {
-        Players.delete(this.props.playerId);
+        Meteor.call("deletePlayer", this.props.playerId);
         FlowRouter.go("players");
     },
 
@@ -38,8 +39,8 @@ PlayerSettingsFormController = React.createClass({
                 { id: "splatoon", name: "Splatoon" },
                 { id: "smash4", name: "Super Smash Bros: 3DS and Wii U" },
             ]}
-            onAddGame={this.addGame}
-            onRemoveGame={this.removeGame}
+            onFollowGame={this.followGame}
+            onUnfollowGame={this.unfollowGame}
             onChangeName={this.changeName}
             onDeletePlayer={this.deletePlayer}
         />;

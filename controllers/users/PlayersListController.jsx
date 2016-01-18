@@ -2,6 +2,7 @@ PlayersListController = React.createClass({
     mixins: [ReactMeteorData],
 
     getMeteorData() {
+        Meteor.subscribe("players");
         return { players: Players.getAll() };
     },
 

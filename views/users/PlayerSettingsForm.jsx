@@ -10,8 +10,8 @@ PlayerSettingsForm = React.createClass({
             id: React.PropTypes.string.isRequired,
             name: React.PropTypes.string.isRequired,
         }).isRequired).isRequired,
-        onAddGame: React.PropTypes.func.isRequired,
-        onRemoveGame: React.PropTypes.func.isRequired,
+        onFollowGame: React.PropTypes.func.isRequired,
+        onUnfollowGame: React.PropTypes.func.isRequired,
         onChangeName: React.PropTypes.func.isRequired,
         onDeletePlayer: React.PropTypes.func.isRequired,
     },
@@ -22,9 +22,9 @@ PlayerSettingsForm = React.createClass({
 
     toggleFollowingGame(id, wasFollowed) {
         if (wasFollowed) {
-            this.props.onRemoveGame(id);
+            this.props.onUnfollowGame(id);
         } else {
-            this.props.onAddGame(id);
+            this.props.onFollowGame(id);
         }
     },
 
