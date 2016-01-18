@@ -7,8 +7,8 @@ It probably doesn't quite do all of that yet.
 ## Getting started
 
 This is a [Meteor](https://www.meteor.com/) app, so, hey, that's fun!
-Keeping in sync with the database is trivial, and also incredibly insecure, but that's okay. Afte
-all, what's security among friends?
+Keeping in sync with the database is trivial, and also incredibly insecure, but that's okay.
+After all, what's security among friends?
 
 After you install Meteor, navigate to the app's root directory and run `meteor`.
 That'll start a local copy of the app on [localhost:3000](http://localhost:3000).
