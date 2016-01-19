@@ -48,6 +48,16 @@ if (Meteor.isServer) {
 }
 
 
+function buildPlayer(doc) {
+    return {
+        _id: doc._id,
+        name: doc.name || "",
+        followedGameIds: doc.followedGameIds || [],
+        contacts: doc.contacts || {},
+    };
+}
+
+
 Players = {
     getAll() {
         return $Players.find().fetch();
@@ -55,12 +65,12 @@ Players = {
 
     get(playerId) {
         // Fetch the player document, or an empty object if no document exists.
-        const player = $Players.findOne(playerId) || { _id: playerId };
+        const doc = $Players.findOne(playerId) || { _id: playerId };
+        return buildPlayer(doc);
+    },
 
-        // If any fields are not yet set, use their default values.
-        player.followedGameIds = player.followedGameIds || [];
-        player.contacts = player.contacts || {};
-
-        return player;
+    getFollowers(gameId) {
+        const docs = $Players.find({ followedGameIds: gameId });
+        return docs.map(buildPlayer);
     },
 };

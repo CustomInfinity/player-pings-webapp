@@ -45,6 +45,7 @@ RecordsList = React.createClass({
                 name: React.PropTypes.string,
             }),
             path: React.PropTypes.string.isRequired,
+            content: React.PropTypes.node,
         }).isRequired).isRequired,
         addRecordPlaceholder: React.PropTypes.string,
         onAdd: React.PropTypes.func,
@@ -59,6 +60,7 @@ RecordsList = React.createClass({
             <a href={record.path}>
                 {this.getName(record)}
             </a>
+            {record.content}
         </li>;
     },
 

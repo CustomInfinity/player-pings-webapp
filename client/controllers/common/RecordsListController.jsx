@@ -2,7 +2,8 @@ RecordsListController = React.createClass({
     propTypes: {
         recordType: React.PropTypes.string.isRequired,
         getAll: React.PropTypes.func.isRequired,
-        view: React.PropTypes.any.isRequired,
+        view: React.PropTypes.any.isRequired,  // a component class
+        viewProps: React.PropTypes.any,
     },
 
     mixins: [ReactMeteorData],
@@ -25,6 +26,6 @@ RecordsListController = React.createClass({
         const props = { onAdd: this.goToRecord };
         props[this.props.recordType + "s"] = records;
 
-        return <this.props.view {...props} />;
+        return <this.props.view {...props} {...this.props.viewProps} />;
     },
 });
