@@ -1,10 +1,10 @@
-PlayersList = React.createClass({
+GamesList = React.createClass({
     propTypes: {
-        players: React.PropTypes.arrayOf(React.PropTypes.shape({
+        games: React.PropTypes.arrayOf(React.PropTypes.shape({
             doc: React.PropTypes.shape({
                 _id: React.PropTypes.string.isRequired,
                 name: React.PropTypes.string,
-            }).isRequired,
+            }),
             path: React.PropTypes.string.isRequired,
         }).isRequired).isRequired,
         onAdd: React.PropTypes.func.isRequired,
@@ -12,10 +12,10 @@ PlayersList = React.createClass({
 
     render() {
         return <div>
-            <p>These are the people we like to play games with!</p>
+            <p>These are the games we like to play!</p>
             <RecordsList
-                records={this.props.players}
-                addRecordPlaceholder="new-player-slug"
+                records={this.props.games}
+                addRecordPlaceholder="new-game-slug"
                 onAdd={this.props.onAdd}
             />
         </div>;

@@ -1,12 +1,3 @@
-/**
- * Methods to interaction with the database's players collection.
- * All possible players implicitly exist, despite not being persisted to the
- * database. If we don't find the player in the database, we return a player with
- * default values. Then, when we attempt to update the player, we perform an
- * upsert to create the document if it didn't already exist.
- */
-
-
 const $Players = new Mongo.Collection("players");
 
 

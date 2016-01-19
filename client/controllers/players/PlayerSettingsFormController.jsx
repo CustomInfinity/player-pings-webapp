@@ -42,7 +42,7 @@ PlayerSettingsFormController = React.createClass({
             onFollowGame={this.followGame}
             onUnfollowGame={this.unfollowGame}
             onChangeName={this.changeName}
-            onDeletePlayer={this.deletePlayer}
+            onDelete={this.deletePlayer}
         />;
     },
 });

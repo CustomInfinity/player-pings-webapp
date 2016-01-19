@@ -2,6 +2,7 @@ PlayerSettingsForm = React.createClass({
     propTypes: {
         player: React.PropTypes.shape({
             _id: React.PropTypes.string.isRequired,
+            name: React.PropTypes.string,
             followedGameIds: React.PropTypes.arrayOf(
                 React.PropTypes.string.isRequired
             ).isRequired,
@@ -13,11 +14,7 @@ PlayerSettingsForm = React.createClass({
         onFollowGame: React.PropTypes.func.isRequired,
         onUnfollowGame: React.PropTypes.func.isRequired,
         onChangeName: React.PropTypes.func.isRequired,
-        onDeletePlayer: React.PropTypes.func.isRequired,
-    },
-
-    changeName(e) {
-        this.props.onChangeName(e.target.value);
+        onDelete: React.PropTypes.func.isRequired,
     },
 
     toggleFollowingGame(id, wasFollowed) {
@@ -25,12 +22,6 @@ PlayerSettingsForm = React.createClass({
             this.props.onUnfollowGame(id);
         } else {
             this.props.onFollowGame(id);
-        }
-    },
-
-    confirmDeletePlayer() {
-        if (confirm("Are you sure you want to delete this player?")) {
-            this.props.onDeletePlayer();
         }
     },
 
@@ -54,21 +45,12 @@ PlayerSettingsForm = React.createClass({
     },
 
     render() {
-        return <div>
-            <div>
-                <label>
-                    Name:
-                    <input
-                        type="text"
-                        value={this.props.player.name}
-                        onChange={this.changeName}
-                    />
-                </label>
-            </div>
-            <ul>{this.renderFollowingGameToggles()}</ul>
-            <button onClick={this.confirmDeletePlayer}>
-                Delete player
-            </button>
-        </div>;
+        return <RecordSettingsForm
+            recordType="player"
+            record={this.props.player}
+            content={this.renderFollowingGameToggles()}
+            onChangeName={this.props.onChangeName}
+            onDelete={this.props.onDelete}
+        />;
     },
 });
