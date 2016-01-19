@@ -3,6 +3,9 @@ PlayerSettingsForm = React.createClass({
         player: React.PropTypes.shape({
             _id: React.PropTypes.string.isRequired,
             name: React.PropTypes.string,
+            contacts: React.PropTypes.shape({
+                discord: React.PropTypes.string,
+            }).isRequired,
             followedGameIds: React.PropTypes.arrayOf(
                 React.PropTypes.string.isRequired
             ).isRequired,
@@ -14,6 +17,7 @@ PlayerSettingsForm = React.createClass({
         onFollowGame: React.PropTypes.func.isRequired,
         onUnfollowGame: React.PropTypes.func.isRequired,
         onChangeName: React.PropTypes.func.isRequired,
+        onChangeContact: React.PropTypes.func.isRequired,
         onDelete: React.PropTypes.func.isRequired,
     },
 
@@ -44,11 +48,39 @@ PlayerSettingsForm = React.createClass({
         });
     },
 
+    handleChangeDiscordContact(e) {
+        this.props.onChangeContact("discord", e.target.value);
+    },
+
+    renderContent() {
+        return <div>
+            <fieldset>
+                <legend>Contact information</legend>
+                <ul>
+                    <li>
+                        <label>
+                            Discord username:
+                            <input
+                                type="text"
+                                value={this.props.player.contacts.discord}
+                                onChange={this.handleChangeDiscordContact}
+                            />
+                        </label>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Games</legend>
+                {this.renderFollowingGameToggles()}
+            </fieldset>
+        </div>;
+    },
+
     render() {
         return <RecordSettingsForm
             recordType="player"
             record={this.props.player}
-            content={this.renderFollowingGameToggles()}
+            content={this.renderContent()}
             onChangeName={this.props.onChangeName}
             onDelete={this.props.onDelete}
         />;

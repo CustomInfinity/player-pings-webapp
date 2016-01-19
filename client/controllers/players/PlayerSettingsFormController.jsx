@@ -6,12 +6,17 @@ PlayerSettingsFormController = React.createClass({
     mixins: [ReactMeteorData],
 
     getMeteorData() {
-        Meteor.subscribe("player", this.props.playerId);
-        return { player: Players.get(this.props.playerId) };
+        const handle = Meteor.subscribe("player", this.props.playerId);
+        return { player: handle.ready() && Players.get(this.props.playerId) };
     },
 
     changeName(newName) {
         Meteor.call("setPlayerName", this.props.playerId, newName);
+    },
+
+    changeContact(serviceId, serviceUserId) {
+        Meteor.call("setPlayerContact", this.props.playerId,
+                    serviceId, serviceUserId);
     },
 
     followGame(id) {
@@ -39,9 +44,10 @@ PlayerSettingsFormController = React.createClass({
                 { id: "splatoon", name: "Splatoon" },
                 { id: "smash4", name: "Super Smash Bros: 3DS and Wii U" },
             ]}
+            onChangeName={this.changeName}
+            onChangeContact={this.changeContact}
             onFollowGame={this.followGame}
             onUnfollowGame={this.unfollowGame}
-            onChangeName={this.changeName}
             onDelete={this.deletePlayer}
         />;
     },

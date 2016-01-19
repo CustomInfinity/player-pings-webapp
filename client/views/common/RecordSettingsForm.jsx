@@ -27,26 +27,29 @@ RecordSettingsForm = React.createClass({
         const record = this.props.record;
 
         return <div>
-            <div>
-                <label>
-                    Slug:
-                    <input
-                        type="text"
-                        value={record._id}
-                        disabled
-                    />
-                </label>
-                <br />
-                <label>
-                    Name:
-                    <input
-                        type="text"
-                        value={record.name}
-                        onChange={this.changeName}
-                        autoFocus={!record.name}
-                    />
-                </label>
-            </div>
+            <ul>
+                <li>
+                    <label>
+                        Slug:
+                        <input
+                            type="text"
+                            value={record._id}
+                            disabled
+                        />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Name:
+                        <input
+                            type="text"
+                            value={record.name}
+                            onChange={this.changeName}
+                            autoFocus={!record.name}
+                        />
+                    </label>
+                </li>
+            </ul>
             {this.props.content}
             <button onClick={this.confirmDelete}>
                 Delete {this.props.recordType}

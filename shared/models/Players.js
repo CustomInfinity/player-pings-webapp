@@ -8,6 +8,17 @@ Meteor.methods({
         }, { upsert: true });
     },
 
+    setPlayerContact(playerId, serviceId, serviceUserId) {
+        check(serviceId, Match.OneOf("discord"));
+
+        const setter = {};
+        setter["contacts." + serviceId] = serviceUserId;
+
+        $Players.update(playerId, {
+            $set: setter
+        }, { upsert: true });
+    },
+
     followGame(playerId, gameId) {
         $Players.update(playerId, {
             $addToSet: { followedGameIds: gameId },
@@ -48,6 +59,7 @@ Players = {
 
         // If any fields are not yet set, use their default values.
         player.followedGameIds = player.followedGameIds || [];
+        player.contacts = player.contacts || {};
 
         return player;
     },
