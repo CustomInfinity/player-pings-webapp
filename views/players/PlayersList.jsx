@@ -1,3 +1,38 @@
+/**
+ * A generic form to put at the end of a list of documents,
+ * which allows the user to create a new document by entering
+ * an ID string.
+ */
+const AddDocumentForm = React.createClass({
+    propTypes: {
+        onSubmit: React.PropTypes.func.isRequired,
+        placeholder: React.PropTypes.string.isRequired,
+    },
+
+    mixins: [React.addons.LinkedStateMixin],
+
+    getInitialState() {
+        return { id: "" };
+    },
+
+    submit(e) {
+        e.preventDefault();
+        this.props.onSubmit(this.state.id);
+    },
+
+    render() {
+        return <form onSubmit={this.submit}>
+            <input
+                type="text"
+                placeholder={this.props.placeholder}
+                valueLink={this.linkState("id")}
+            />
+            <button>Add</button>
+        </form>;
+    },
+});
+
+
 PlayersList = React.createClass({
     propTypes: {
         players: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -5,31 +40,12 @@ PlayersList = React.createClass({
             name: React.PropTypes.string,
         }).isRequired).isRequired,
         getPlayerPath: React.PropTypes.func.isRequired,
-    },
-
-    getInitialState() {
-        return { newPlayerId: uuid.v4() };
-    },
-
-    updateNewPlayerId() {
-        // If the player ctrl-clicks "Add player" in order to get a bunch of
-        // new player forms, they should actually get _different_ new player
-        // forms. So, when the link is clicked, update the new player ID.
-        this.setState({ newPlayerId: uuid.v4() });
+        onAddPlayer: React.PropTypes.func.isRequired,
     },
 
     sortPlayers() {
-        const players = this.props.players.slice(0);  // shallow copy
-
-        // Sort according to alphabetical order in the user's locale.
-        // Treat a, á, and A as the same character.
-        const collator = new Intl.Collator(undefined, { sensitivity: "base" });
-        players.sort((a, b) => {
-            return collator.compare(this.renderPlayerName(a),
-                                    this.renderPlayerName(b))
-        });
-
-        return players;
+        return ViewUtil.alphabeticalSort(this.props.players,
+                                         this.renderPlayerName);
     },
 
     renderPlayerName(player) {
@@ -39,7 +55,7 @@ PlayersList = React.createClass({
     renderPlayerLink(player) {
         return <li key={player._id}>
             <a href={this.props.getPlayerPath(player._id)}>
-                {player.name || player._id}
+                {this.renderPlayerName(player)}
             </a>
         </li>;
     },
@@ -49,12 +65,10 @@ PlayersList = React.createClass({
             <ul>
                 {this.sortPlayers().map(this.renderPlayerLink)}
                 <li>
-                    <a
-                        href={this.props.getPlayerPath(this.state.newPlayerId)}
-                        onClick={this.updateNewPlayerId}
-                    >
-                        Add player
-                    </a>
+                    <AddDocumentForm
+                        onSubmit={this.props.onAddPlayer}
+                        placeholder="new-player-slug"
+                    />
                 </li>
             </ul>
         </div>;
