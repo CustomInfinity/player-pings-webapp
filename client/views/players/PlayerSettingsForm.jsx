@@ -11,7 +11,7 @@ PlayerSettingsForm = React.createClass({
             ).isRequired,
         }).isRequired,
         allGames: React.PropTypes.arrayOf(React.PropTypes.shape({
-            id: React.PropTypes.string.isRequired,
+            _id: React.PropTypes.string.isRequired,
             name: React.PropTypes.string.isRequired,
         }).isRequired).isRequired,
         onFollowGame: React.PropTypes.func.isRequired,
@@ -32,14 +32,14 @@ PlayerSettingsForm = React.createClass({
     renderFollowingGameToggles() {
         return this.props.allGames.map((game) => {
             const followed =
-                this.props.player.followedGameIds.indexOf(game.id) >= 0;
-            return <li key={game.id}>
+                this.props.player.followedGameIds.indexOf(game._id) >= 0;
+            return <li key={game._id}>
                 <label>
                     <input
                         type="checkbox"
                         checked={followed}
                         onChange={() =>
-                            this.toggleFollowingGame(game.id, followed)
+                            this.toggleFollowingGame(game._id, followed)
                         }
                     />
                     {game.name}
