@@ -59,7 +59,7 @@ PlayerSettingsForm = React.createClass({
                 <ul>
                     <li>
                         <label>
-                            Discord username:
+                            Discord user ID:
                             <input
                                 type="text"
                                 value={this.props.player.contacts.discord}

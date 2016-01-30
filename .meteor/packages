@@ -21,3 +21,7 @@ kadira:react-layout
 kadira:flow-router
 jaywon:meteor-node-uuid
 check
+meteorhacks:npm
+
+
+npm-container
